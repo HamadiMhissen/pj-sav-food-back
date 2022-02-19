@@ -25,7 +25,7 @@ jobs:
     - name: setup-mysql
       run: |
         sudo /etc/init.d/mysql start
-        mysql -h127.0.0.1 -uroot -e 'CREATE DATABASE test_db;'
+        mysql -h127.0.0.1 -uroot -p0000 -e 'CREATE DATABASE test_db;'
 
     - name: Build with Maven
       run: mvn -B package --file pom.xml
