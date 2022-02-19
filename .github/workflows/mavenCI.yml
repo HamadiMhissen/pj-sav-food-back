@@ -19,7 +19,7 @@ jobs:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: PJSAVDB
         ports:
-            - '8888:3307'
+            - '8888:3306'
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
     - uses: actions/checkout@v2
@@ -37,7 +37,7 @@ jobs:
       #  mysql -h 127.0.0.1 -u root -proot -e 'CREATE DATABASE test_db;'
 
     - name: Build with Maven
-      run: mvn clean install #-B package --file pom.xml
+      run: mvn clean install -DskipTests #-B package --file pom.xml
 
     - name: Display structure of downloaded files
       run: ls -R
