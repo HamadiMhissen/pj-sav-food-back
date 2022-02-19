@@ -26,6 +26,12 @@ jobs:
       uses: shogo82148/actions-setup-mysql@v1.7.0
       with:
         mysql-version: 'mariadb-10.6'
+        my-cnf: |
+          innodb_log_file_size=256MB
+          innodb_buffer_pool_size=512MB
+          max_allowed_packet=16MB
+          max_connections=50
+          local_infile=1
     - run: mysql -uroot -h127.0.0.1 -e 'SELECT version()'
     
       #run: |
