@@ -23,9 +23,14 @@ jobs:
         cache: maven
         
     - name: setup-mysql
-      run: |
-        sudo /etc/init.d/mysql start
-        mysql -h127.0.0.1 -uroot -proot -e 'CREATE DATABASE test_db;'
+      uses: shogo82148/actions-setup-mysql@v1.7.0
+      with:
+        mysql-version: '8.0'
+    - run: mysql -uroot -h127.0.0.1 -e 'SELECT version()'
+    
+      #run: |
+      #  sudo /etc/init.d/mysql start
+      #  mysql -h127.0.0.1 -uroot -proot -e 'CREATE DATABASE test_db;'
 
     - name: Build with Maven
       run: mvn -B package --file pom.xml
