@@ -32,11 +32,11 @@ jobs:
           max_allowed_packet=16MB
           max_connections=50
           local_infile=1
-    - run: sudo systemctl mysql -uroot -h127.0.0.1 -e 'SELECT version()'
+    - run: sudo mysql -h 127.0.0.1 -u root -e 'SELECT version()'
     
       #run: |
       #  sudo /etc/init.d/mysql start
-      #  mysql -h127.0.0.1 -uroot -proot -e 'CREATE DATABASE test_db;'
+      #  mysql -h 127.0.0.1 -u root -proot -e 'CREATE DATABASE test_db;'
 
     - name: Build with Maven
       run: mvn -B package --file pom.xml
