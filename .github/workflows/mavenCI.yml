@@ -42,7 +42,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: surefire-reports
-        path: home/** # or path/to/artifact
+        path: ./** # or path/to/artifact
 
     
 
