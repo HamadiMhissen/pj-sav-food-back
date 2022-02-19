@@ -25,7 +25,7 @@ jobs:
     - name: setup-mysql
       uses: shogo82148/actions-setup-mysql@v1.7.0
       with:
-        mysql-version: '8.0'
+        mysql-version: 'mariadb-10.6'
     - run: mysql -uroot -h127.0.0.1 -e 'SELECT version()'
     
       #run: |
