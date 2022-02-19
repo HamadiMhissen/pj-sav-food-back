@@ -32,7 +32,7 @@ jobs:
     - name: setup-mysql
       run: |
         sudo /etc/init.d/mysql start
-        mysql -h127.0.0.1 -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }} -e 'CREATE DATABASE ${{ env.DB_DATABASE }};'
+        mysql -h127.0.0.1 -uroot -proot -e 'CREATE DATABASE test_db;'
 
     - name: Build with Maven
       run: mvn -B package --file pom.xml
