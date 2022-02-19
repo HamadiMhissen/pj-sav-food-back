@@ -29,3 +29,9 @@ jobs:
       with:
         name: surefire-reports
         path: pj-sav-food-back/target/surefire-reports/** # or path/to/artifact
+    - uses: actions/download-artifact@v2
+      with:
+        name: my-artifact
+    
+    - name: Display structure of downloaded files
+      run: ls -R
