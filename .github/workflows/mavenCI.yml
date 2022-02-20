@@ -44,5 +44,15 @@ jobs:
         name: surefire-reports
         path: ./** # or path/to/artifact
 
+    - name: Build & push Docker image
+      uses: mr-smithers-excellent/docker-build-push@v5
+      with:
+        image: hamadimhissen/mlr-it-consulting-repas-app
+        tags: latest
+        registry: docker.io
+        dockerfile: Dockerfile
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
     
 
