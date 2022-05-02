@@ -27,7 +27,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		HashMap<String, Object> body = new HashMap<>();
 		List<String> errors = ex.getBindingResult().getFieldErrors().stream().map(x -> x.getDefaultMessage())
 				.collect(Collectors.toList());
-		body.put("errors", errors);
+		body.put("erreurs", errors);
 		return new ResponseEntity<>(body, headers, status);
 	}
 	
@@ -36,14 +36,5 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		ApiException apiException = new ApiException(e.getMessage(),e,HttpStatus.INTERNAL_SERVER_ERROR,ZonedDateTime.now(ZoneId.of("Z")));
 		return new ResponseEntity<>(apiException, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-	/*
-	 * @ExceptionHandler(Exception.class)
-	 * 
-	 * @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR) public
-	 * ExceptionRestResponse handleCustomException(String msg) { return new
-	 * ExceptionRestResponse(500, msg); }
-	 * 
-	 * @Value public static class ExceptionRestResponse { int code; String message;
-	 * }
-	 */
+
 }

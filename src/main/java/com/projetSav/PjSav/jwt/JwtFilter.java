@@ -1,6 +1,7 @@
 package com.projetSav.PjSav.jwt;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,21 +22,32 @@ import com.projetSav.PjSav.security.UserDetailsServicePrincipal;
 @Component
 public class JwtFilter extends OncePerRequestFilter {
 
+
+	private JwtUtil jwtUtil;
+	private UserDetailsServicePrincipal userDetailsService;
+	
+	
+
+
 	@Autowired
-	JwtUtil jwtUtil;
-	@Autowired
-	UserDetailsServicePrincipal userDetailsService;
+	public JwtFilter(JwtUtil jwtUtil, UserDetailsServicePrincipal userDetailsService, JwtConfig jwtConfig) {
+		super();
+		this.jwtUtil = jwtUtil;
+		this.userDetailsService = userDetailsService;
+	}
+
+
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 
-		String authorizationHeader = request.getHeader("Authorization");
+		String authorizationHeader = request.getHeader(jwtUtil.getHttpHeader());
 
 		String jwt = null;
 		String email = null;
 		try {
-			if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+			if (authorizationHeader != null && authorizationHeader.startsWith(jwtUtil.getTokenPrefix())) {
 				jwt = authorizationHeader.substring(7);
 				email = jwtUtil.extractUsername(jwt);
 			}

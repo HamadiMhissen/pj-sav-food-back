@@ -1,21 +1,14 @@
 package com.projetSav.PjSav.security;
 
-import java.util.Collection;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
 import com.projetSav.PjSav.dao.ClientRepository;
 import com.projetSav.PjSav.model.Client;
-import com.projetSav.PjSav.model.Role;
+
 
 @Service
 public class UserDetailsServicePrincipal implements UserDetailsService {
@@ -30,11 +23,6 @@ public class UserDetailsServicePrincipal implements UserDetailsService {
 		clt = clientRepository.findByEmail(username);
 		}
 		catch(Exception e) {e.getMessage();}
-		return new User(clt.getEmail(), clt.getPassword(),  mapRolesToAuthorities(clt.getRoles()));
+		return new User(clt.getUsername(), clt.getPassword(),  clt.getAuthorities());
 	}
-	
-    private Collection< ? extends GrantedAuthority> mapRolesToAuthorities(Set<Role> roles){
-        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getLibelle())).collect(Collectors.toList());
-    }
-
 }

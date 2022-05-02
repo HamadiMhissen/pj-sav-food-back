@@ -36,8 +36,9 @@ public class PjSavApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		/*
 		logger.info("Loading data..." + args.toString());
-		logger.info("Adding Roles ");
+		logger.info("Adding Rxoles ");
 		roleRepository.save(new Role(1,"ROLE_ADMIN"));
 		roleRepository.save(new Role(2,"ROLE_USER"));
 		logger.info("Done Adding Roles ");
@@ -55,7 +56,7 @@ public class PjSavApplication implements CommandLineRunner {
 		List<Role> listRoles = roleRepository.findAll();
 		clt.setRoles(new HashSet<Role>(listRoles));	
 		clientRepository.save(clt);
-
+	*/
 	}
 
 }

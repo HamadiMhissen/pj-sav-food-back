@@ -2,13 +2,15 @@ package com.projetSav.PjSav.services;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-
 import com.projetSav.PjSav.model.Client;
 
 
 public interface ClientService {
-	Client createClient(Client clt);
+	String createClient(Client clt);
+
+	String encoderMdp(String mdp);
+
+	Boolean testerClientValide(String email);
 
 	Client updateClient(int idClt, Client nvClt);
 	
@@ -21,4 +23,10 @@ public interface ClientService {
 	void deleteClient(int idClt);
 
 	List<Client> getAllClients();
+
+	int enableClient(String username);
+	
+	
+	
+	
 }
