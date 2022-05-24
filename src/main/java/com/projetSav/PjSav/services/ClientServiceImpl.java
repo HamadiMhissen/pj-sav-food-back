@@ -7,6 +7,7 @@ import com.projetSav.PjSav.model.JetonEmailConfirm;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -34,29 +35,41 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Boolean testerClientValide(String email) {
+    public Boolean testerClientActivé(String email) {
         return clientRepository.existsByEnabledTrueAndLockedFalseAndEmailEquals(email);
     }
 
     @Override
-    //TODO : refactoring du code, passer au déclaratif
+    @Transactional
     public Client updateClient(int idClt, Client nvClt) {
-        Client ancienClt = clientRepository.findById(idClt).get();
-        ancienClt.setNom(nvClt.getNom());
-        ancienClt.setPrenom(nvClt.getPrenom());
-        ancienClt.setSexe(nvClt.getSexe());
-        ancienClt.setDateNaiss(nvClt.getDateNaiss());
-        ancienClt.setEmail(nvClt.getEmail());
-        ancienClt.setTel(nvClt.getTel());
-        ancienClt.setTelFixe(nvClt.getTelFixe());
-        ancienClt.setPassword(nvClt.getPassword());
-        ancienClt.setRoles(new HashSet<>(roleRepository.findAll()));
-        return clientRepository.save(ancienClt);
+        Client ancienClt = clientRepository
+                .findById(idClt)
+                .orElseThrow(
+                        () -> new RuntimeException("client non trouvé, id: " + idClt +" est erroné")
+                );
+        Client cltAjour = Client.builder()
+                .nom(nvClt.getNom())
+                .prenom(nvClt.getPrenom())
+                .sexe(nvClt.getSexe())
+                .dateNaiss(nvClt.getDateNaiss())
+                .email(nvClt.getEmail())
+                .tel(nvClt.getTel())
+                .telFixe(nvClt.getTelFixe())
+                .password(nvClt.getPassword())
+                .roles(new HashSet<>(roleRepository.findAll()))
+                .build();
+        clientRepository.delete(ancienClt);
+        return clientRepository.save(cltAjour);
     }
 
     @Override
     public void deleteClient(int idClt) {
-        Client clt = clientRepository.findById(idClt).get();
+        Client clt = clientRepository.
+                findById(idClt).
+                orElseThrow(
+                () -> new RuntimeException("Client identifié par "+idClt+" non supprimé car il n'existe pas")
+        );
+        jetonEmailConfirmService.deleteJetonConfirmIfExists(idClt);
         clientRepository.delete(clt);
     }
 

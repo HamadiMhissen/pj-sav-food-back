@@ -4,6 +4,7 @@ import com.projetSav.PjSav.dao.JetonEmailConfirmRepository;
 import com.projetSav.PjSav.model.JetonEmailConfirm;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -27,5 +28,10 @@ public class JetonEmailConfirmService {
         jetonEmailRepository.updateConfirmedAt(jeton, LocalDateTime.now());
     }
 
-
+    @Transactional
+    public void deleteJetonConfirmIfExists(int idClt) {
+        if (jetonEmailRepository.existsByCltId(idClt)) {
+            jetonEmailRepository.deleteByCltId(idClt);
+        }
+    }
 }

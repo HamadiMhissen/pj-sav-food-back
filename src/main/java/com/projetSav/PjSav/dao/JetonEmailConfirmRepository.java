@@ -15,7 +15,10 @@ import com.projetSav.PjSav.model.JetonEmailConfirm;
 public interface JetonEmailConfirmRepository extends JpaRepository<JetonEmailConfirm, Integer> {
 
 	Optional<JetonEmailConfirm> findByJeton(String jetonConf);
-	
+
+    boolean existsByCltId(int idClt);
+
+    void deleteByCltId(int idClt);
 	
 	@Transactional
     @Modifying
