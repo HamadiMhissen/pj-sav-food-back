@@ -1,0 +1,8 @@
+# This is a generated file. Not intended for manual editing.
+version: "3.7"
+services:
+  repas_app:
+    command: "java -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005\
+      \ -jar /mlr-it-consulting-repas-app.jar"
+    ports:
+    - "5005:5005"
