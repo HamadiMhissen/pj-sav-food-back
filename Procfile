@@ -1,0 +1,1 @@
+web: java -jar target/mlr-it-consulting-repas-app.jar
