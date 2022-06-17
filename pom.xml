@@ -12,7 +12,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>PjSav</name>
 	<description>App pour commander des repas</description>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
