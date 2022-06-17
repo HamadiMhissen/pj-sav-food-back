@@ -1,1 +1,1 @@
-web: java -jar target/mlr-it-consulting-repas-app.jar
+web: java -Dserver.port=$PORT -jar target/mlr-it-consulting-repas-app.jar
